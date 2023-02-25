@@ -1,0 +1,61 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="page-enter" content="blendTrans(duration=0.3)">
+    <meta http-equiv="page-exit" content="blendTrans(duration=0.3)">
+    <link rel="stylesheet" href={% static "./css/style.css" %}/>
+    <link rel="stylesheet" href={% static "./css/listup.css" %}/>
+    <link rel="stylesheet" href={% static "./css/mainHeader.css" %}>
+
+    <title>SKKU WE</title>
+
+</head>
+
+<body>
+    <div id ="root">
+        <div class="wrapper">
+            <header id="header">
+                <a href={% url 'main' %}>
+                    <div>
+                        <h1 class="title">WHERE EAT</h1>
+                    </div>
+                    <div>
+                        <h3 class="subTitle">성대한 한끼를 위하여</h3>
+                    </div>
+                </a>
+            </header>
+            <main id ="main">
+                <div class="curation">
+                    <h3 class="curationName">{{catName}}</h3>
+                    <div class="contentBox">
+                        {% for data in datas %}
+                            <a href = "{{data.place_url}}">
+                                <div class="content">
+                                    <div>
+                                        <h3 class="placeName">{{data.place_name}}</h3>
+                                    </div>
+                                    <a href="{{d.place_url}}">
+                                        <div class="placePhoto">
+                                            <img class="img" src={% static "./img/ttt.png" %} alt="">
+                                        </div>
+                                    </a>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+
+
+            </main>
+        </div>
+    </div>
+    
+</body>
+
+
+
+</html>

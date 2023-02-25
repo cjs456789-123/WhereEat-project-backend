@@ -1,0 +1,28 @@
+.curationName{
+    color:black;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-right: 12px;
+    margin-bottom: -3px;
+    /*text-align: center;*/
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.mapBtn{
+    background-color: transparent;
+    border-color: transparent;
+    color: #7C7A7A;
+    font-weight: bold;
+}
+
+.contentBox{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    
+    justify-content: center;
+    align-items: center;
+  
+}

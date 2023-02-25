@@ -1,0 +1,220 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="page-enter" content="blendTrans(duration=0.3)">
+    <meta http-equiv="page-exit" content="blendTrans(duration=0.3)">
+    <link rel="stylesheet" href={% static "./css/style.css" %}/>
+    <link rel="stylesheet" href={% static "./css/map.css" %}/>
+    <link rel="stylesheet" href={% static "./css/main.css" %}/>
+    <link rel="stylesheet" href={% static "./css/mainHeader.css" %}>
+    <style>
+        .placeinfo_wrap {
+        position:absolute;
+        bottom:5px;
+        left:-30px;
+        }
+    </style>
+    <title>SKKU WE</title>
+
+</head>
+
+<body>
+    <div id ="root">
+        <div class="wrapper">
+            <header id="header">
+                <a href={% url 'main' %}>
+                    <div>
+                        <h1 class="title">WHERE EAT</h1>
+                    </div>
+                    <div>
+                        <h3 class="subTitle">성대한 한끼를 위하여</h3>
+                    </div>
+                </a>
+            </header>
+            <main id ="main">
+                <div id="map" style="width:100%; height:375px; margin-top:15px;">            
+                </div>
+                <div class="curation" style="margin-left: 0px">
+                    <div>
+                        <h3 class="curationName" style="float:left; margin-top: 0;">{{catName}}</h3>
+                    </div>
+                    <div id="lstBtn">
+                        <a href={% url 'listup' %}>
+                            <form action="/listup/" method="GET">
+                                <!-- 리스트업 버튼을 추가하면서 태그 순서가 엉켜 css가 깨진거 같아요... map.css에 mapBtn을 복사해 lstBtn 추가해둠 -->
+                                <input type="hidden" name="ID" value="{{ID}}">
+                                <button class="lstBtn"><img src={% static "./img/listBtn.png" %} style="float:right; margin-right: 10px; width: 26px; height: 22px;"></button>
+                            </form>
+                        </a>
+
+                        <!-- 참고용
+                        <form action="/map/" method="GET">
+                            <input type="hidden" name="ID" value="1"><button class="mapBtn"> 지도 보기 ></button>
+                        </form>
+                        참고용 -->
+
+
+                    </div>
+                    <div style="clear:both;"></div>
+
+                    <div class="contentBox">
+                        {% for data in datas %}
+                            <div class="content" id="{{data.place_name}}">
+                                <div>
+                                    <h3 class="placeName">{{data.place_name}}</h3>
+                                </div>
+                                <a href = "{{data.place_url}}">
+                                    <div class="placePhoto">
+                                        <img class="img" src={% static "./img/ttt.png" %} alt="">
+                                    </div>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c5ad138d2f70235999e58457efecd380"></script> -->
+                <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d1226d2eaf8146caf0e412f6158a8dbc"></script>
+                <!-- <script type="text/javascript" src="./js/map.js"></script> -->
+                <script>
+                    var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+                        mapOption = {
+                            //center: new kakao.maps.LatLng(37.5884546, 126.9926780), // 지도의 중심좌표
+                            center: new kakao.maps.LatLng(37.5867965, 126.9952135),   // 지도 중심을 "국제관"으로 변경
+                            level: 4 // 지도의 확대 레벨
+                        };
+
+                    var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+
+                    function displayMarker(locPosition) {
+
+                        // 마커를 생성합니다
+                        var marker = new kakao.maps.Marker({  
+                            map: map, 
+                            position: locPosition
+                        }); 
+    
+                        // 지도 중심좌표를 접속위치로 변경합니다
+                         map.setCenter(locPosition);      
+                    }    
+
+
+                    var imageSrc = "{% static './img/marker.png' %}", // 마커이미지의 주소입니다    
+                        imageSize = new kakao.maps.Size(32, 32), // 마커이미지의 크기입니다
+                        imageOption = {offset: new kakao.maps.Point(16, 40)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+
+                    // 마커가 표시될 위치입니다 
+                    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+
+                    // 마커를 클릭했을 때 해당 장소의 상세정보를 보여줄 커스텀오버레이입니다
+                    var placeOverlay = new kakao.maps.CustomOverlay({zIndex:1}), 
+                        contentNode = document.createElement('div'); // 커스텀 오버레이의 컨텐츠 엘리먼트 입니다 
+
+                    // 마커를 클릭했을 때 적용될 id 객체입니다 +++추가된 부분
+                    var detailInfo=document.getElementsByClassName('content');
+                    // 마커를 표시할 위치와 내용을 가지고 있는 객체 배열입니다 
+
+                    //for문을 사용한 var positions 장소 데이터 구현 +++추가 시작
+                    var datas = JSON.parse("{{ datasJson | escapejs }}");
+                    console.log(datas)
+
+                    var positions = [];
+                    for (var i=0; i<Object.keys(datas).length; i++) {
+                        var content = {
+                            place_name: datas[i]['place_name'],
+                            latlng    : new kakao.maps.LatLng(parseFloat(datas[i]['y']), parseFloat(datas[i]['x']))
+                        }
+                        positions.push(content);
+                    };
+                    console.log(positions);
+                    
+                    // +++추가 끝
+
+
+                    // 커스텀 오버레이의 컨텐츠 노드에 css class를 추가합니다 
+                    contentNode.className = 'placeinfo_wrap';
+
+                    // 커스텀 오버레이의 컨텐츠 노드에 mousedown, touchstart 이벤트가 발생했을때
+                    // 지도 객체에 이벤트가 전달되지 않도록 이벤트 핸들러로 kakao.maps.event.preventMap 메소드를 등록합니다 
+                    addEventHandle(contentNode, 'mousedown', kakao.maps.event.preventMap);
+                    addEventHandle(contentNode, 'touchstart', kakao.maps.event.preventMap);
+
+                    // 커스텀 오버레이 컨텐츠를 설정합니다
+                    placeOverlay.setContent(contentNode);  
+                    // 적용된 css를 해제시키는 함수입니다. +++추가
+                    function initializeCss()
+                    {
+                        for (var i=0; i<positions.length; i++)
+                                {document.getElementById(positions[i].place_name).className="content";}
+                    }
+                    
+                                
+
+
+                    // 엘리먼트에 이벤트 핸들러를 등록하는 함수입니다
+                    function addEventHandle(target, type, callback) {
+                        if (target.addEventListener) {
+                            target.addEventListener(type, callback);
+                        } else {
+                            target.attachEvent('on' + type, callback);
+                        }
+                    }
+
+                    for (var i = 0; i < positions.length; i ++) {
+                        // 마커를 생성합니다
+                        var marker = new kakao.maps.Marker({
+                            map: map, // 마커를 표시할 지도
+                            position: positions[i].latlng, // 마커의 위치
+                            image: markerImage
+                        });
+                        // 마커와 검색결과 항목을 클릭 했을 때
+                        // 장소정보를 표출하도록 클릭 이벤트를 등록합니다
+                        (function(marker, position) {
+                            kakao.maps.event.addListener(marker, 'click', function() {  
+                                initializeCss()
+                                displayPlaceInfo(position);
+                                setGreenBorder(position);
+
+                            });
+                        })(marker, positions[i]);
+                        
+                    }
+
+                    // 클릭한 마커에 대한 장소 상세정보를 커스텀 오버레이로 표시하는 함수입니다
+                    function displayPlaceInfo (position) {
+                        
+                    
+                        var content = '<div class="infoBox">' +
+                                        '   <a class="title" href="' + position.place_url + '" target="_blank" title="' + position.place_name + '">' + position.place_name + '</a>';      
+                        contentNode.innerHTML = content;
+                        
+                        
+                        placeOverlay.setPosition(position.latlng);
+                        placeOverlay.setMap(map); 
+                        
+                    //각각 정보에 맞는 id를 통해서 연결시키면 될 것 같습니다.
+                       
+                       
+                    }
+
+                    // css 및 스크롤 포커스 적용 함수입니다.     +추가 
+                    function setGreenBorder(position){
+                        var detail =  document.getElementById(position.place_name).className="greenBorder";  +
+                        document.getElementById(position.place_name).scrollIntoView({behavior:"smooth"});
+                        detailInfo.innerHTML=detail;
+                    }
+                </script>
+
+            </main>
+        </div>
+    </div>
+    
+</body>
+
+
+</html>
+
