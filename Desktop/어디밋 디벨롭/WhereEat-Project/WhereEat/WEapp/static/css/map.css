@@ -11,10 +11,13 @@
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 15px;
     padding: 11px 5px;
+    
 }
 .infoTitle {
     font-size: 16px;
     font-weight: 700;
+    color: black;
+    
 }
 
 /* .placeinfo_wrap {
@@ -22,9 +25,3 @@
     bottom:5px;
     left:-30px;
 } */
-
-.lstBtn{
-    background-color: transparent;
-    border-color: transparent;
-    color: #7C7A7A;
-  }

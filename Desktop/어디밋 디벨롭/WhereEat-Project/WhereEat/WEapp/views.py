@@ -6,6 +6,8 @@ from django.shortcuts import render
 
 REST_API_KEY = "b99712a0fe7d08fc13dcc9613be9bb15"
 
+APPKEY = "d1226d2eaf8146caf0e412f6158a8dbc"
+
 
 with open('./WEapp/data/placename.json', 'r', encoding='UTF8') as f:
     category = json.load(f)
@@ -27,6 +29,8 @@ def data_food(cat):
         if places == []:
             pass
         else:
+            places[0]['src'] = 'static/img/'+places[0]['id']+'.png'
+            places[0]['src_map'] = 'map/static/img/'+places[0]['id']+'.png'
             placesList.append(places[0])
     return placesList
     
@@ -45,6 +49,8 @@ def data_cafe(cat):
         if places == []:
             pass
         else:
+            places[0]['src'] = 'static/img/'+places[0]['id']+'.png'
+            places[0]['src_map'] = 'map/static/img/'+places[0]['id']+'.png'
             placesList.append(places[0])
     return placesList
     
@@ -62,6 +68,8 @@ def data_other(cat):
         if places == []:
             pass
         else:
+            places[0]['src'] = 'static/img/'+places[0]['id']+'.png'
+            places[0]['src_map'] = 'map/static/img/'+places[0]['id']+'.png'
             placesList.append(places[0])
     return placesList
 
@@ -90,25 +98,27 @@ other1 = data_other(cat_other[0])
 
 def main(request):
 
-    result = {"data1" : food1,
-              "data2" : food2,
-              "data3" : cafe1,
-              "data4" : food3,
-              "data5" : food4,
-              "data6" : food5,
-              "data7" : food6,
-              "data8" : food7,
-              "data9" : food8,
-              "data10" : food9,
-              "data11" : cafe2,
-              "data12" : cafe3,
-              "data13" : other1,
-              "data14" : food10,
-              "data15" : food11,
-              "data16" : food12,
-              "data17" : food13,
-              "data18" : food14,
-              "data19" : food15}
+    result = {
+        "data1" : food1,
+        "data2" : food2,
+        "data3" : cafe1,
+        "data4" : food3,
+        "data5" : food4,
+        "data6" : food5,
+        "data7" : food6,
+        "data8" : food7,
+        "data9" : food8,
+        "data10" : food9,
+        "data11" : cafe2,
+        "data12" : cafe3,
+        "data13" : other1,
+        "data14" : food10,
+        "data15" : food11,
+        "data16" : food12,
+        "data17" : food13,
+        "data18" : food14,
+        "data19" : food15
+    }
 
 
     return render(request, 'WEapp/main.html', result)
@@ -137,6 +147,7 @@ def map(request):
     data_map_json = json.dumps(data_map, ensure_ascii=False)
     
     result = {
+        "appkey" : APPKEY,
         "datas"     : data_map,
         "datasJson" : data_map_json,
         "ID"        : ID,

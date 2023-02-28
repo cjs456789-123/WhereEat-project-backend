@@ -195,6 +195,12 @@
 
                             });
                         })(marker, positions[i]);
+
+                        kakao.maps.event.addListener(map, 'click', function(){
+                            closeOverlay();
+                            initializeCss();
+                        })
+                        
                         
                     }
 
@@ -203,7 +209,7 @@
                         
                     
                         var content = '<div class="infoBox">' +
-                                        '   <a class="title" href="' + position.place_url + '" target="_blank" title="' + position.place_name + '">' + position.place_name + '</a>';      
+                                        '   <a class="infoTitle" href="' + position.place_url + '" target="_blank" infoTitle="' + position.place_name + '">' + position.place_name + '</a>';      
                         contentNode.innerHTML = content;
                         
                         
@@ -220,6 +226,10 @@
                         var detail =  document.getElementById(position.place_name).className="greenBorder";  +
                         document.getElementById(position.place_name).scrollIntoView({behavior:"smooth"});
                         detailInfo.innerHTML=detail;
+                    }
+
+                    function closeOverlay(){
+                        placeOverlay.setMap(null);
                     }
                 </script>
 

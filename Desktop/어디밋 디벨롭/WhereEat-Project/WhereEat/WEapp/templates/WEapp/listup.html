@@ -40,7 +40,7 @@
                                     </div>
                                     <a href="{{d.place_url}}">
                                         <div class="placePhoto">
-                                            <img class="img" src={% static "./img/ttt.png" %} alt="">
+                                            <img class="img" src={{data.src}} alt="">
                                         </div>
                                     </a>
                                 </div>
@@ -48,8 +48,6 @@
                         {% endfor %}
                     </div>
                 </div>
-
-
             </main>
         </div>
     </div>
