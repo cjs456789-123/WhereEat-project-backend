@@ -3,13 +3,14 @@ import json
 import requests
 
 from django.shortcuts import render
+from django.http import HttpResponse
 
 REST_API_KEY = "b99712a0fe7d08fc13dcc9613be9bb15"
 
 APPKEY = "d1226d2eaf8146caf0e412f6158a8dbc"
 
 
-with open('./WEapp/data/placename.json', 'r', encoding='UTF8') as f:
+with open('./WEapp/data/placename2.json', 'r', encoding='UTF8') as f:
     category = json.load(f)
 cat_food = list(category['foods'].keys())
 cat_cafe = list(category['cafes'].keys())
@@ -30,7 +31,6 @@ def data_food(cat):
             pass
         else:
             places[0]['src'] = 'static/img/'+places[0]['id']+'.png'
-            places[0]['src_map'] = 'map/static/img/'+places[0]['id']+'.png'
             placesList.append(places[0])
     return placesList
     
@@ -50,7 +50,6 @@ def data_cafe(cat):
             pass
         else:
             places[0]['src'] = 'static/img/'+places[0]['id']+'.png'
-            places[0]['src_map'] = 'map/static/img/'+places[0]['id']+'.png'
             placesList.append(places[0])
     return placesList
     
@@ -69,7 +68,6 @@ def data_other(cat):
             pass
         else:
             places[0]['src'] = 'static/img/'+places[0]['id']+'.png'
-            places[0]['src_map'] = 'map/static/img/'+places[0]['id']+'.png'
             placesList.append(places[0])
     return placesList
 
@@ -94,6 +92,17 @@ cafe2 = data_cafe(cat_cafe[1])
 cafe3 = data_cafe(cat_cafe[2])
 
 other1 = data_other(cat_other[0])
+
+def extractId(request):
+    
+    result = {
+        "datas" : [food1, food2, food3, food4, food5, food6, food7, food8, food9, food10, food11, food15,
+                   cafe1, cafe2, cafe3,
+                   other1]
+    }
+    
+    
+    return render(request, 'extractId.html', result)
 
 
 def main(request):
@@ -127,22 +136,22 @@ def main(request):
 
 def map(request):
     
-    ID = request.GET.get('ID', int)
+    ID = int(request.POST.get('ID', ''))
     
     # cafe
-    if int(ID) in [3, 11, 12]:
-        data_map = globals()['cafe{}'.format([3,11,12].index(int(ID))+1)]
-        cat_map = cat_cafe[[3,11,12].index(int(ID))]
+    if ID in [3, 11, 12]:
+        data_map = globals()['cafe{}'.format([3,11,12].index(ID+1))]
+        cat_map = cat_cafe[[3,11,12].index(ID)]
     
     # other
-    elif int(ID) in [13]:
-        data_map = globals()['other{}'.format([13].index(int(ID))+1)]
-        cat_map = cat_other[[13].index(int(ID))]
+    elif ID in [13]:
+        data_map = globals()['other{}'.format([13].index(ID)+1)]
+        cat_map = cat_other[[13].index(ID)]
         
     # food
     else:
-        data_map = globals()['food{}'.format([1,2,4,5,6,7,8,9,10,14,15,16,17,18,19].index(int(ID))+1)]
-        cat_map = cat_food[[1,2,4,5,6,7,8,9,10,14,15,16,17,18,19].index(int(ID))]
+        data_map = globals()['food{}'.format([1,2,4,5,6,7,8,9,10,14,15,16,17,18,19].index(ID)+1)]
+        cat_map = cat_food[[1,2,4,5,6,7,8,9,10,14,15,16,17,18,19].index(ID)]
     
     data_map_json = json.dumps(data_map, ensure_ascii=False)
     
@@ -160,22 +169,22 @@ def map(request):
 
 def listup(request):
     
-    ID = request.GET.get('ID', int)
+    ID = int(request.POST.get('ID', ''))
     
     # cafe
-    if int(ID) in [3, 11, 12]:
-        data_listup = globals()['cafe{}'.format([3,11,12].index(int(ID))+1)]
-        cat_listup = cat_cafe[[3,11,12].index(int(ID))]
+    if ID in [3, 11, 12]:
+        data_listup = globals()['cafe{}'.format([3,11,12].index(ID)+1)]
+        cat_listup = cat_cafe[[3,11,12].index(ID)]
     
     # other
-    elif int(ID) in [13]:
-        data_listup = globals()['other{}'.format([13].index(int(ID))+1)]
-        cat_listup = cat_other[[13].index(int(ID))]
+    elif ID in [13]:
+        data_listup = globals()['other{}'.format([13].index(ID)+1)]
+        cat_listup = cat_other[[13].index(ID)]
         
     # food
     else:
-        data_listup = globals()['food{}'.format([1,2,4,5,6,7,8,9,10,14,15,16,17,18,19].index(int(ID))+1)]
-        cat_listup = cat_food[[1,2,4,5,6,7,8,9,10,14,15,16,17,18,19].index(int(ID))]
+        data_listup = globals()['food{}'.format([1,2,4,5,6,7,8,9,10,14,15,16,17,18,19].index(ID)+1)]
+        cat_listup = cat_food[[1,2,4,5,6,7,8,9,10,14,15,16,17,18,19].index(ID)]
         
     result = {
         "datas"  : data_listup,

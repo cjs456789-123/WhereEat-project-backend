@@ -7,10 +7,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="page-enter" content="blendTrans(duration=0.3)">
     <meta http-equiv="page-exit" content="blendTrans(duration=0.3)">
-    <link rel="stylesheet" href={% static "./css/style.css" %}/>
+    <!-- local runserver -->
+    <!--<link rel="stylesheet" href={% static "./css/style.css" %}/>
     <link rel="stylesheet" href={% static "./css/map.css" %}/>
     <link rel="stylesheet" href={% static "./css/main.css" %}/>
-    <link rel="stylesheet" href={% static "./css/mainHeader.css" %}>
+    <link rel="stylesheet" href={% static "./css/mainHeader.css" %}>-->
+    
+    <!-- deploy -->
+    <link rel="stylesheet" href="static/css/style.css"/>
+    <link rel="stylesheet" href="static/css/map.css"/>
+    <link rel="stylesheet" href="static/css/main.css"/>
+    <link rel="stylesheet" href="static/css/mainHeader.css"/>
+
     <style>
         .placeinfo_wrap {
         position:absolute;
@@ -43,13 +51,12 @@
                         <h3 class="curationName" style="float:left; margin-top: 0;">{{catName}}</h3>
                     </div>
                     <div id="lstBtn">
-                        <a href={% url 'listup' %}>
-                            <form action="/listup/" method="GET">
-                                <input type="hidden" name="ID" value="{{ID}}">
-                                <button class="lstBtn"><img src={% static "./img/listBtn.png" %} style="float:right; margin-right: 10px; width: 26px; height: 22px;"></button>
-                            </form>
-                        </a>
-
+                        <form method="post" action="listup">
+                            {% csrf_token %}
+                            <input type="hidden" name="ID" value="{{ID}}">
+                            <button class="lstBtn" style="float:right; margin-right: 5px; width: 35px; height: 28px; background-color: transparent; border-color: transparent;">
+                            <img src="./static/img/listBtn.png" style="float:right; width: 30px; height: 25px;"></button>
+                        </form>
                     </div>
                     <div style="clear:both;"></div>
 

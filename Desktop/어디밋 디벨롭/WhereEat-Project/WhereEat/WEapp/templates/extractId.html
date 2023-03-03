@@ -1,0 +1,7 @@
+id,place_name,
+{% for d in datas %}
+    {% for data in d %}
+        {{data.id}},{{data.place_name}},
+        <br>
+    {% endfor %}
+{% endfor %}

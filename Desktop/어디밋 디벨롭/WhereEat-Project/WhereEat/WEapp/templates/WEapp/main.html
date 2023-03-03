@@ -7,9 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="page-enter" content="blendTrans(duration=0.3)">
     <meta http-equiv="page-exit" content="blendTrans(duration=0.3)">
-    <link rel="stylesheet" href={% static "./css/style.css" %}/>
+    <!-- local runserver -->
+    <!--<link rel="stylesheet" href={% static "./css/style.css" %}/>
     <link rel="stylesheet" href={% static "./css/main.css" %}/>
-    <link rel="stylesheet" href={% static "./css/mainHeader.css" %}>
+    <link rel="stylesheet" href={% static "./css/mainHeader.css" %}>-->
+
+    <!-- deploy -->
+    <link rel="stylesheet" href="static/css/style.css"/>
+    <link rel="stylesheet" href="static/css/main.css"/>
+    <link rel="stylesheet" href="static/css/mainHeader.css"/>
+
     <title>SKKU WE</title>
 
 </head>
@@ -31,35 +38,33 @@
                 <div class="curation">
                     <div class="curationName">
                         <h3 style="margin: 0px;">밥약 국룰 맛집</h3>
-                        <a href={% url 'map' %}>
-                            <form action="/map/" method="GET">
-                                <input type="hidden" name="ID" value="1"><button class="mapBtn"> 지도 보기 ></button>
-                            </form>
-                        </a>
+                        <form method="post" action="map">
+                            {% csrf_token %}
+                            <input type="hidden" name="ID" value="1"><button class="mapBtn"> 지도 보기 ></button>
+                        </form>
                     </div>
                     <div class="contentBox">
                         {% for data in data1 %}
-                            <a href = "{{data.place_url}}">
-                                <div class="content">
-                                    <div>
-                                        <h3 class="placeName">{{data.place_name}}</h3>
-                                    </div>
+                            <div class="content">
+                                <div>
+                                    <h3 class="placeName">{{data.place_name}}</h3>
+                                </div>
+                                <a href = "{{data.place_url}}">
                                     <div class="placePhoto">
                                         <img class="img" src={{data.src}} alt="">
                                     </div>
-                                </div>
-                            </a>
+                                </a>
+                            </div>
                         {% endfor %}
                     </div>
                 </div>
                 <div class="curation">
                     <div class="curationName">
                         <h3 style="margin: 0px;">혼밥해도 괜찮아</h3>
-                        <a href={% url 'map' %}>
-                            <form action="/map/" method="GET">
-                                <input type="hidden" name="ID" value="2"><button class="mapBtn"> 지도 보기 ></button>
-                            </form>
-                        </a>
+                        <form method="post" action="map">
+                            {% csrf_token %}
+                            <input type="hidden" name="ID" value="2"><button class="mapBtn"> 지도 보기 ></button>
+                        </form>
                     </div>
                 
                     <div class="contentBox">
@@ -80,11 +85,10 @@
                 <div class="curation">
                     <div class="curationName">
                         <h3 style="margin: 0px;">카공족들 모여라</h3>
-                        <a href={% url 'map' %}>
-                            <form action="/map/" method="GET">
-                                <input type="hidden" name="ID" value="3"><button class="mapBtn"> 지도 보기 ></button>
-                            </form>
-                        </a>
+                        <form method="post" action="map">
+                            {% csrf_token %}
+                            <input type="hidden" name="ID" value="3"><button class="mapBtn"> 지도 보기 ></button>
+                        </form>
                     </div>
                 
                     <div class="contentBox">
@@ -105,11 +109,10 @@
                 <div class="curation">
                     <div class="curationName">
                         <h3 style="margin: 0px;">단체 술 약속은 여기서</h3>
-                        <a href={% url 'map' %}>
-                            <form action="/map/" method="GET">
-                                <input type="hidden" name="ID" value="4"><button class="mapBtn"> 지도 보기 ></button>
-                            </form>
-                        </a>
+                        <form method="post" action="map">
+                            {% csrf_token %}
+                            <input type="hidden" name="ID" value="4"><button class="mapBtn"> 지도 보기 ></button>
+                        </form>
                     </div>
                 
                     <div class="contentBox">
@@ -130,11 +133,10 @@
                 <div class="curation">
                     <div class="curationName">
                         <h3 style="margin: 0px;">걸어서 가는 맛집</h3>
-                        <a href={% url 'map' %}>
-                            <form action="/map/" method="GET">
-                                <input type="hidden" name="ID" value="5"><button class="mapBtn"> 지도 보기 ></button>
-                            </form>
-                        </a>
+                        <form method="post" action="map">
+                            {% csrf_token %}
+                            <input type="hidden" name="ID" value="5"><button class="mapBtn"> 지도 보기 ></button>
+                        </form>
                     </div>
                 
                     <div class="contentBox">
@@ -155,11 +157,10 @@
                 <div class="curation">
                     <div class="curationName">
                         <h3 style="margin: 0px;">셔틀 타고 가는 맛집</h3>
-                        <a href={% url 'map' %}>
-                            <form action="/map/" method="GET">
-                                <input type="hidden" name="ID" value="6"><button class="mapBtn"> 지도 보기 ></button>
-                            </form>
-                        </a>
+                        <form method="post" action="map">
+                            {% csrf_token %}
+                            <input type="hidden" name="ID" value="6"><button class="mapBtn"> 지도 보기 ></button>
+                        </form>
                     </div>
                 
                     <div class="contentBox">
@@ -180,11 +181,10 @@
                 <div class="curation">
                     <div class="curationName">
                         <h3 style="margin: 0px;">밥 먹으면서 한잔</h3>
-                        <a href={% url 'map' %}>
-                            <form action="/map/" method="GET">
-                                <input type="hidden" name="ID" value="7"><button class="mapBtn"> 지도 보기 ></button>
-                            </form>
-                        </a>
+                        <form method="post" action="map">
+                            {% csrf_token %}
+                            <input type="hidden" name="ID" value="7"><button class="mapBtn"> 지도 보기 ></button>
+                        </form>
                     </div>
                 
                     <div class="contentBox">
@@ -205,11 +205,10 @@
                 <div class="curation">
                     <div class="curationName">
                         <h3 style="margin: 0px;">CC 데이트 성지</h3>
-                        <a href={% url 'map' %}>
-                            <form action="/map/" method="GET">
-                                <input type="hidden" name="ID" value="8"><button class="mapBtn"> 지도 보기 ></button>
-                            </form>
-                        </a>
+                        <form method="post" action="map">
+                            {% csrf_token %}
+                            <input type="hidden" name="ID" value="8"><button class="mapBtn"> 지도 보기 ></button>
+                        </form>
                     </div>
                 
                     <div class="contentBox">
@@ -230,11 +229,10 @@
                 <div class="curation">
                     <div class="curationName">
                         <h3 style="margin: 0px;">인스타에서 유명해</h3>
-                        <a href={% url 'map' %}>
-                            <form action="/map/" method="GET">
-                                <input type="hidden" name="ID" value="9"><button class="mapBtn"> 지도 보기 ></button>
-                            </form>
-                        </a>
+                        <form method="post" action="map">
+                            {% csrf_token %}
+                            <input type="hidden" name="ID" value="9"><button class="mapBtn"> 지도 보기 ></button>
+                        </form>
                     </div>
                     
                     <div class="contentBox">
@@ -255,11 +253,10 @@
                 <div class="curation">
                     <div class="curationName">
                         <h3 style="margin: 0px;">가성비가 내리는 식당</h3>
-                        <a href={% url 'map' %}>
-                            <form action="/map/" method="GET">
-                                <input type="hidden" name="ID" value="10"><button class="mapBtn"> 지도 보기 ></button>
-                            </form>
-                        </a>
+                        <form method="post" action="map">
+                            {% csrf_token %}
+                            <input type="hidden" name="ID" value="10"><button class="mapBtn"> 지도 보기 ></button>
+                        </form>
                     </div>
                 
                     <div class="contentBox">
@@ -280,11 +277,10 @@
                 <div class="curation">
                     <div class="curationName">
                         <h3 style="margin: 0px;">무드 넘치는 카페</h3>
-                        <a href={% url 'map' %}>
-                            <form action="/map/" method="GET">
-                                <input type="hidden" name="ID" value="11"><button class="mapBtn"> 지도 보기 ></button>
-                            </form>
-                        </a>
+                        <form method="post" action="map">
+                            {% csrf_token %}
+                            <input type="hidden" name="ID" value="11"><button class="mapBtn"> 지도 보기 ></button>
+                        </form>
                     </div>
                 
                     <div class="contentBox">
@@ -305,11 +301,10 @@
                 <div class="curation">
                     <div class="curationName">
                         <h3 style="margin: 0px;">디저트 맛집</h3>
-                        <a href={% url 'map' %}>
-                            <form action="/map/" method="GET">
-                                <input type="hidden" name="ID" value="12"><button class="mapBtn"> 지도 보기 ></button>
-                            </form>
-                        </a>
+                        <form method="post" action="map">
+                            {% csrf_token %}
+                            <input type="hidden" name="ID" value="12"><button class="mapBtn"> 지도 보기 ></button>
+                        </form>
                     </div>
                 
                     <div class="contentBox">
@@ -330,11 +325,10 @@
                 <div class="curation">
                     <div class="curationName">
                         <h3 style="margin: 0px;">칵테일 한 잔</h3>
-                        <a href={% url 'map' %}>
-                            <form action="/map/" method="GET">
-                                <input type="hidden" name="ID" value="13"><button class="mapBtn"> 지도 보기 ></button>
-                            </form>
-                        </a>
+                        <form method="post" action="map">
+                            {% csrf_token %}
+                            <input type="hidden" name="ID" value="13"><button class="mapBtn"> 지도 보기 ></button>
+                        </form>
                     </div>
                 
                     <div class="contentBox">
@@ -355,11 +349,10 @@
                 <div class="curation">
                     <div class="curationName">
                         <h3 style="margin: 0px;">오늘은 고기 먹는 날</h3>
-                        <a href={% url 'map' %}>
-                            <form action="/map/" method="GET">
-                                <input type="hidden" name="ID" value="14"><button class="mapBtn"> 지도 보기 ></button>
-                            </form>
-                        </a>
+                        <form method="post" action="map">
+                            {% csrf_token %}
+                            <input type="hidden" name="ID" value="14"><button class="mapBtn"> 지도 보기 ></button>
+                        </form>
                     </div>
                 
                     <div class="contentBox">
@@ -380,11 +373,10 @@
                 <div class="curation">
                     <div class="curationName">
                         <h3 style="margin: 0px;">혜화 로컬 맛집</h3>
-                        <a href={% url 'map' %}>
-                            <form action="/map/" method="GET">
-                                <input type="hidden" name="ID" value="15"><button class="mapBtn"> 지도 보기 ></button>
-                            </form>
-                        </a>
+                        <form method="post" action="map">
+                            {% csrf_token %}
+                            <input type="hidden" name="ID" value="15"><button class="mapBtn"> 지도 보기 ></button>
+                        </form>
                     </div>
                 
                     <div class="contentBox">
@@ -405,11 +397,10 @@
                 <div class="curation">
                     <div class="curationName">
                         <h3 style="margin: 0px;">나라별 맛집: 일본</h3>
-                        <a href={% url 'map' %}>
-                            <form action="/map/" method="GET">
-                                <input type="hidden" name="ID" value="16"><button class="mapBtn"> 지도 보기 ></button>
-                            </form>
-                        </a>
+                        <form method="post" action="map">
+                            {% csrf_token %}
+                            <input type="hidden" name="ID" value="16"><button class="mapBtn"> 지도 보기 ></button>
+                        </form>
                     </div>
                 
                     <div class="contentBox">
@@ -430,11 +421,10 @@
                 <div class="curation">
                     <div class="curationName">
                         <h3 style="margin: 0px;">나라별 맛집: 중국</h3>
-                        <a href={% url 'map' %}>
-                            <form action="/map/" method="GET">
-                                <input type="hidden" name="ID" value="17"><button class="mapBtn"> 지도 보기 ></button>
-                            </form>
-                        </a>
+                        <form method="post" action="map">
+                            {% csrf_token %}
+                            <input type="hidden" name="ID" value="17"><button class="mapBtn"> 지도 보기 ></button>
+                        </form>
                     </div>
                 
                     <div class="contentBox">
@@ -455,11 +445,10 @@
                 <div class="curation">
                     <div class="curationName">
                         <h3 style="margin: 0px;">나라별 맛집: <br>&nbsp;인도/태국/베트남/멕시코/아랍</h3>
-                        <a href={% url 'map' %}>
-                            <form action="/map/" method="GET">
-                                <input type="hidden" name="ID" value="18"><button class="mapBtn"> 지도 보기 ></button>
-                            </form>
-                        </a>
+                        <form method="post" action="map">
+                            {% csrf_token %}
+                            <input type="hidden" name="ID" value="18"><button class="mapBtn"> 지도 보기 ></button>
+                        </form>
                     </div>
                 
                     <div class="contentBox">
@@ -480,11 +469,10 @@
                 <div class="curation">
                     <div class="curationName">
                         <h3 style="margin: 0px;">나라별 맛집: 한국</h3>
-                        <a href={% url 'map' %}>
-                            <form action="/map/" method="GET">
-                                <input type="hidden" name="ID" value="19"><button class="mapBtn"> 지도 보기 ></button>
-                            </form>
-                        </a>
+                        <form method="post" action="map">
+                            {% csrf_token %}
+                            <input type="hidden" name="ID" value="19"><button class="mapBtn"> 지도 보기 ></button>
+                        </form>
                     </div>
                 
                     <div class="contentBox">

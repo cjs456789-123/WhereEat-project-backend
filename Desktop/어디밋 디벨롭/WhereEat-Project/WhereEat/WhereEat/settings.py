@@ -15,8 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# >!< views.py에서 json파일을 읽기 위해 추가함 <!>
-# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -25,9 +23,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-t!q)vhe@pb-be66wey_6szs*-ai-ud18j37=z&=3)nkty)21$%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# +++ Develop Mode +++
 DEBUG = True
-
 ALLOWED_HOSTS = []
+
+# # +++ Employ Mode +++
+# DEBUG = False
+# ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -123,10 +125,10 @@ STATIC_URL = '/static/'
 
 # +++ 추가 시작 - img 적용
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'WMapp', 'static'),  # 현재 static 파일들이 어디에 있는지
+    os.path.join(BASE_DIR, 'WEapp', 'static'),  # 현재 static 파일들이 어디에 있는지
 ]
 
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')  # static 파일들을 어디에 모을건지
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')  # static 파일들을 어디에 모을건지
 
 # +++ 추가 끝
 
