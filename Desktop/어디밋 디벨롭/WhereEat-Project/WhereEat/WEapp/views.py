@@ -140,7 +140,7 @@ def map(request):
     
     # cafe
     if ID in [3, 11, 12]:
-        data_map = globals()['cafe{}'.format([3,11,12].index(ID+1))]
+        data_map = globals()['cafe{}'.format([3,11,12].index(ID)+1)]
         cat_map = cat_cafe[[3,11,12].index(ID)]
     
     # other
