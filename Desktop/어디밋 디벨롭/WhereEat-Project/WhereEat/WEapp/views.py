@@ -5,12 +5,14 @@ import requests
 from django.shortcuts import render
 from django.http import HttpResponse
 
-REST_API_KEY = "b99712a0fe7d08fc13dcc9613be9bb15"
+from decouple import config
 
-APPKEY = "d1226d2eaf8146caf0e412f6158a8dbc"
+REST_API_KEY = config('REST_API_KEY')
+
+APPKEY = config('APPKEY')
 
 
-with open('./WEapp/data/placename2.json', 'r', encoding='UTF8') as f:
+with open('./WEapp/data/placename.json', 'r', encoding='UTF8') as f:
     category = json.load(f)
 cat_food = list(category['foods'].keys())
 cat_cafe = list(category['cafes'].keys())
@@ -92,17 +94,6 @@ cafe2 = data_cafe(cat_cafe[1])
 cafe3 = data_cafe(cat_cafe[2])
 
 other1 = data_other(cat_other[0])
-
-def extractId(request):
-    
-    result = {
-        "datas" : [food1, food2, food3, food4, food5, food6, food7, food8, food9, food10, food11, food15,
-                   cafe1, cafe2, cafe3,
-                   other1]
-    }
-    
-    
-    return render(request, 'extractId.html', result)
 
 
 def main(request):

@@ -6,6 +6,4 @@ urlpatterns = [
     path('', views.main, name='main'),
     path('map', views.map, name='map'),
     path('listup', views.listup, name='listup'),
-    
-    path('extractId', views.extractId, name='extractId'),
 ]
